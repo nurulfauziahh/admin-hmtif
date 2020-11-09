@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Firebase Cloud Firestore Tutorial - Web</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main>
+    <form>
+        <label for="userId">User ID</label><br>
+        <input type="text" name="userId" id="userId"><br>
+        <label for="namaDonasi ">Nama Donasi</label><br>
+        <input type="text" name="namaDonasi" id="namaDonasi"><br>
+        <label for="danaDonasi ">Dana Donasi</label><br>
+        <input type="number" name="danaDonasi" id="danaDonasi"><br>  
+        <label for="deskripsi ">deskripsi </label><br>
+        <input type="text" name="deskripsi" id="deskripsi"><br>  
+        <label for="kategori">kategori</label><br>
+        <input type="text" name="kategori" id="kategori"><br>
+        <label for="gambarDonasi">gambar Donasi</label><br>
+        <input type="text" name="gambarDonasi" id="gambarDonasi"><br>
+        <label for="shortDeskripsi">short Deskripsi</label><br>
+        <input type="text" name="shortDeskripsi" id="shortDeskripsi"><br>
+        <button id="addBtn" class="btn waves-effect waves-light">Add</button>
+        <button id="updateBtn" class="btn waves-effect waves-light">Update</button>
+        <button id="readBtn" class="btn waves-effect waves-light">Read</button>
+        <button id="removeBtn" class="btn waves-effect red darken-1">Remove</button>
+    </form>
+  </main>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-firestore.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+     <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        var firebaseConfig = {
+          apiKey: "AIzaSyDzdN5Ies6hxarwNYKcAIe296Znmij922k",
+          authDomain: "flutter-c76ac.firebaseapp.com",
+          databaseURL: "https://flutter-c76ac.firebaseio.com",
+          projectId: "flutter-c76ac",
+          storageBucket: "flutter-c76ac.appspot.com",
+          messagingSenderId: "241175124681",
+          appId: "1:241175124681:web:cd82d5dba795e0765a0b18",
+          measurementId: "G-HZ55R99NMK"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+      </script>
+
+<!-- <script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyBLz3lJ7AE-yvmJxqrH1KcqK1QEprMfmaU",
+    authDomain: "my-awesome-project-283fb.firebaseapp.com",
+    databaseURL: "https://my-awesome-project-283fb.firebaseio.com",
+    projectId: "my-awesome-project-283fb",
+    storageBucket: "my-awesome-project-283fb.appspot.com",
+    messagingSenderId: "692999370357",
+    appId: "1:692999370357:web:45bf09ddd30395d4346a3c"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script> -->
+  <script src="./function.js"></script>
+</body>
+</html>
