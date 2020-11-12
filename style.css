@@ -21,3 +21,7 @@ form {
 button {
     margin-top: 2rem;
 }
+
+table, th {
+    text-align: center;
+  }
