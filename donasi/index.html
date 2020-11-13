@@ -21,6 +21,18 @@
           width: 25%;
           padding: 0 10px;
         }
+
+        p, h5 {
+            overflow: hidden;
+            padding-right: 2.5rem;
+        text-overflow: ellipsis;
+        }
+
+        h4 {
+            padding-right: 2.5rem;
+        overflow: auto;
+    margin-top: auto;
+        }
         
         /* Remove extra left and right margins, due to padding */
         .row {margin: 0 -5px;}
@@ -59,6 +71,7 @@
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
             padding: 5px;
             margin: 3px;
+            display: flex;
 
           }
           
@@ -71,8 +84,8 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modalDetail" aria-label="Close">
+          <h5 class="modal-title" id="exampleModalLabel">Detail Campaign</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -87,19 +100,14 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button class="btn btn-primary" id="editBtn" type="submit">Edit</button>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-  <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal">
-  Launch demo modal
-</button>
 
-<!-- Modal -->
+<!-- Modal Edit Form-->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -168,13 +176,65 @@
     </div>
   </div>
 </div>
-    
+    <!-- end edit modal -->
 
-
-      
-<nav class="navbar navbar-light bg-warning mb-4">
-    <span></span>
-</nav>
+    <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand text-primary font-weight-bold" href="#">ap</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="aspirasi/aspirasi.html" id="show-button">Aspirasi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="mission.html">Donasi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="services.html">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="join.html">About Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>	
+        </nav>
+        <!-- End Navigation -->
+        
+        <!--- Image Slider -->
+        <!-- <div id="slides" class="carousel slide" data-ride="carousel" data-interval="3000"> 
+        <ul class="carousel-indicators">
+            <li data-target="#slides" data-slide-to="0" class="active"></li>
+            <li data-target="#slides" data-slide-to="0"></li>
+            <li data-target="#slides" data-slide-to="0"></li>
+        </ul>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="../assets/img/new.jpg" class="mx-auto d-block" width=100%>
+                <div class="carousel-caption">
+                    <h1 class="display-4">We look forward to a better future.</h1>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="../assets/img/hh.jpg" class="mx-auto d-block" width=100%>
+                <div class="carousel-caption">
+                    <h1 class="display-4">We offer quality services to our customers.</h1>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="../assets/img/hha.jpg" class="mx-auto d-block" width=100%>
+                <div class="carousel-caption">
+                    <h1 class="display-4">We persistently evolve ourselves.</h1>
+                </div>
+            </div>
+        </div>
+        </div> -->
 
 <div class="container">
     <div class="row">
@@ -221,7 +281,7 @@
               
         </div>
     </div>
-    
+
     <div clas="row">
     <div class="col-md-12" id="cardSection" >
         

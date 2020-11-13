@@ -32,6 +32,15 @@ addBtn.addEventListener('click', e => {
 });
 
 
+let template = null;
+    $('.modal').on('show.bs.modal', function(event) {
+      template = $(this).html();
+    });
+
+    $('.modal').on('hidden.bs.modal', function(e) {
+      $(this).html(template);
+    });
+
 function createCampaign(namaDonasi, danaDonasi, deskripsi, kategori, gambarDonasi) {
   var campaign = {
     namaDonasi: namaDonasi,
@@ -51,8 +60,9 @@ function createCampaign(namaDonasi, danaDonasi, deskripsi, kategori, gambarDonas
 
 
 
+
 function detailShow(id){
-  const database = firebase.firestore();
+const database = firebase.firestore();
 const userCollection = database.collection('Donasi');
 userCollection.doc(id).get()
   .then(donasis => {
@@ -63,8 +73,9 @@ userCollection.doc(id).get()
     <img class="card-img-top" src="${donasi.gambarDonasi}" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title">${donasi.namaDonasi}</h5>
+      <p class="card-text">Kategori: ${donasi.kategori}</p>
       <p class="card-text">Dana yang dibutuhkan : Rp.${donasi.danaDonasi}</p>
-      <button type="button" id="edit-donasi-btn"  class="btn btn-success edit-donasi-btn" data-toggle="modal" data-target="#editModal">Edit</button>
+      <p class="card-text"><span class="data-deskripsi">Deskripsi : ${donasi.deskripsi}</span></p>
     </div>
   </div>
     
@@ -76,57 +87,6 @@ userCollection.doc(id).get()
     console.error(error);
   });
 }
-// function readDetail() {
-//   document.getElementById("cardSection").innerHTML = '';
-//   firebase.firestore().collection("Donasi").onSnapshot(function (snapshot) {
-//     snapshot.forEach(function (donasiValue) {
-//       var donasi = donasiValue.data();
-//       document.getElementById("cardSection").innerHTML += `
-//       <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-//       <div class="modal-dialog">
-//         <div class="modal-content">
-//           <div class="modal-header">
-//             <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-//             <button type="button" class="close" data-dismiss="modalDetail" aria-label="Close">
-//               <span aria-hidden="true">&times;</span>
-//             </button>
-//           </div>
-//           <div class="modal-body">
-//               <div class="col-md-12" id="detailSection" >
-//               <div class="column">
-//               <div class="card" style="width: 20rem;">
-//               <div class="polaroid">
-//                <img class="card-img-top" src="${donasi.gambarDonasi}" alt="Card image cap">
-//                </div>
-//                  <div class="card-body">
-//                    <h6 class="card-title" ><span id="data-nama">${donasi.namaDonasi}</span></h5>
-//                    <p class="card-text"><span class="data-deskripsi">${donasi.danaDonasi}</span></p>
-//                    <p class="card-text"><span class="data-deskripsi">${donasi.deskripsi}</span></p>
-//                  </div>
-//                  <ul class="list-group list-group-flush list">
-//                    <li class="list-group-item data-kategori" id="data-kategori">${donasi.kategori}</li>
-//                    <li class="list-group-item data-kategori" id="data-kategori">${donasiValue.id}</li>
-//                  <div class="card-body">
-//                    <button type="button" id="edit-donasi-btn"  class="btn btn-success edit-donasi-btn" data-toggle="modalDetail" data-target="#editModal">Edit Me!!</button>
-//                    <button type="submit" class="btn btn-success" onclick="deleteCamp('${donasiValue.id}')">Hapus</button>
-//                  </div>
-//                </div>
-//                </div>
-//               </div>
-//           </div>
-//           <div class="modal-footer">
-//             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-//             <button class="btn btn-primary" id="editBtn" type="submit">Edit</button>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-  
-// `
-
-//     });
-//   });
-// }
 
 function readCampaign() {
   firebase.firestore().collection("Donasi").onSnapshot(function (snapshot) {
