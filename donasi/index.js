@@ -49,26 +49,31 @@ function createCampaign(namaDonasi, danaDonasi, deskripsi, kategori, gambarDonas
   })
 }
 
-const detail = document.getElementById("detail-btn");
 
 
-detail.addEventListener('click', e => {
-  e.preventDefault();
-  usersCollection.doc(id).get()
-  .then(donasi => {
-    if(donasi.exists)
-      console.log(user.data());
+function detailShow(id){
+  const database = firebase.firestore();
+const userCollection = database.collection('Donasi');
+userCollection.doc(id).get()
+  .then(donasis => {
+    donasi = donasis.data();
+    if(donasis.exists)
+    document.getElementById("detailSection").innerHTML += `
+
+    <img class="card-img-top" src="${donasi.gambarDonasi}" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">${donasi.namaDonasi}</h5>
+      <p class="card-text">Dana yang dibutuhkan : Rp.${donasi.danaDonasi}</p>
+      <button type="button" id="edit-donasi-btn"  class="btn btn-success edit-donasi-btn" data-toggle="modal" data-target="#editModal">Edit</button>
+    </div>
+  </div>
+    
+`
     else
-      console.log('User does not exist !');
+      console.log('Campaign does not exist !');
     })
   .catch(error => {
     console.error(error);
-  });
-});
-
-function detailShow(id){
-  firebase.firestore().collection("Donasi").doc(id).delete().then(() => {
-    console.log("data dihapus");
   });
 }
 // function readDetail() {
@@ -134,7 +139,7 @@ function readCampaign() {
           <div class="card-body">
             <h5 class="card-title">${donasi.namaDonasi}</h5>
             <p class="card-text">Dana yang dibutuhkan : Rp.${donasi.danaDonasi}</p>
-            <button type="button" id="detail-btn"  class="btn btn-success edit-donasi-btn">Details</button>
+            <button type="button" id="detail-btn"  class="btn btn-success edit-donasi-btn" onclick="detailShow('${donasiValue.id}')" data-toggle="modal" data-target="#detailModal">Details</button>
             <button type="button" id="edit-donasi-btn"  class="btn btn-success edit-donasi-btn" data-toggle="modal" data-target="#editModal">Edit</button>
             <button type="submit" class="btn btn-success" onclick="deleteCamp('${donasiValue.id}')">Hapus</button>
           </div>
