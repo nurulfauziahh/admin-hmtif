@@ -1,37 +1,28 @@
-const userId = document.getElementById('userId');
-const namaDonasi = document.getElementById('namaDonasi');
-const deskripsi = document.getElementById('deskripsi');
-const kategori = document.getElementById('kategori');
-const gambarDonasi = document.getElementById('gambarDonasi');
-const danaDonasi = document.getElementById('danaDonasi');
-const shortDeskripsi = document.getElementById('shortDeskripsi');
-const addBtn = document.getElementById('addBtn');
-const updateBtn = document.getElementById('updateBtn');
-const readBtn = document.getElementById('readBtn');
-const removeBtn = document.getElementById('removeBtn');
-const gambar = document.getElementById("gambar");
 
 const database = firebase.firestore();
 const userCollection = database.collection('Donasi');
 
-addBtn.addEventListener('click', e => {
-  e.preventDefault();
-  const ID = userCollection.doc();
-  ID.set({
-    //type: 'admin'
-    namaDonasi: namaDonasi.value,
-    danaDonasi: Number(danaDonasi.value),
-    deskripsi: deskripsi.value,
-    kategori: kategori.value,
-    gambarDonasi: gambarDonasi.value
-  })
-    .then(() => { console.log('Data Successfully'); })
-    .catch(error => { console.error(error) });
-    document.getElementById("cardSection").innerHTML = '';
-    readCampaign();
+
+$("#create-campaign-button").click(function(){
+  var donasi = {
+    namaDonasi: $("#namaDonasi").val(),
+    danaDonasi: $("#danaDonasi").val(),
+    deskripsi: $("#deskripsi").val(),
+    kategori: $("#kategori").val(),
+    gambarDonasi: $("#gambarDonasi").val(),
+
+  }
+  addDonasi(donasi);
+  console.log("berhasil ditambahkan");
+
 });
 
+function addDonasi(h){
+  firebase.firestore().collection("Donasi").add(h);
+  
+}
 
+// Clear modal
 let template = null;
     $('.modal').on('show.bs.modal', function(event) {
       template = $(this).html();
@@ -40,25 +31,6 @@ let template = null;
     $('.modal').on('hidden.bs.modal', function(e) {
       $(this).html(template);
     });
-
-function createCampaign(namaDonasi, danaDonasi, deskripsi, kategori, gambarDonasi) {
-  var campaign = {
-    namaDonasi: namaDonasi,
-    danaDonasi: danaDonasi,
-    deskripsi: deskripsi,
-    kategori: kategori,
-    gambarDonasi: gambarDonasi
-  }
-  userCollection.add(campaign).then(() => {
-    Swal.fire(
-      'Sudah ditambahkan',
-      'success'
-    )
-    
-  })
-}
-
-
 
 
 function detailShow(id){
@@ -69,13 +41,12 @@ userCollection.doc(id).get()
     donasi = donasis.data();
     if(donasis.exists)
     document.getElementById("detailSection").innerHTML += `
-
     <img class="card-img-top" src="${donasi.gambarDonasi}" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title">${donasi.namaDonasi}</h5>
-      <p class="card-text">Kategori: ${donasi.kategori}</p>
-      <p class="card-text">Dana yang dibutuhkan : Rp.${donasi.danaDonasi}</p>
-      <p class="card-text"><span class="data-deskripsi">Deskripsi : ${donasi.deskripsi}</span></p>
+      <p class="card-text kategori">${donasi.kategori}</p>
+      <p class="card-text dana">Dana yang dibutuhkan : Rp.${donasi.danaDonasi}</p>
+      <p class="card-text deskripsi">${donasi.deskripsi}</p>
     </div>
   </div>
     
@@ -95,12 +66,18 @@ function readCampaign() {
       var donasi = donasiValue.data();
       document.getElementById("cardSection").innerHTML += `
           <div class="column">
+          <div clas="card">
           <img class="card-img-top" src="${donasi.gambarDonasi}" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title">${donasi.namaDonasi}</h5>
-            <p class="card-text">Dana yang dibutuhkan : Rp.${donasi.danaDonasi}</p>
-            <button type="button" id="detail-btn"  class="btn btn-success edit-donasi-btn" onclick="detailShow('${donasiValue.id}')" data-toggle="modal" data-target="#detailModal">Details</button>
-            <button type="button" id="edit-donasi-btn"  class="btn btn-success edit-donasi-btn" data-toggle="modal" data-target="#editModal">Edit</button>
+            <p class="card-text kategori" style="display:none">${donasi.kategori}</p>
+            <p class="card-text">Dana yang dibutuhkan :</p>
+            <p class="card-text dana">${donasi.danaDonasi}</p>
+            <p class="card-text deskripsi" style="display:none">${donasi.deskripsi}</p>
+            <p class="card-text gambar" style="display:none">${donasi.gambarDonasi}</p>
+
+            <button type="button" id="detail-btn"  class="btn btn-success" onclick="detailShow('${donasiValue.id}')" data-toggle="modal" data-target="#detailModal">Details</button>
+            <button type="button" id="edit-donasi-btn" data-heroId="${donasiValue.id}" class="btn btn-success edit-donasi-btn" data-toggle="modal" data-target="#editModal">Edit</button>
             <button type="submit" class="btn btn-success" onclick="deleteCamp('${donasiValue.id}')">Hapus</button>
           </div>
         </div>
@@ -117,45 +94,45 @@ function deleteCamp(id){
   });
 }
 
+$(document).on('click', '.edit-donasi-btn', function(){
+  var campaignId = $(this).attr('data-heroId');
+  console.log("you click " + campaignId);
+  $('#campaignId').val(campaignId);
 
-$(document).on('click', '.edit-donasi-btn', function () {
+  var nama = $(this).parent().find('.card-title').text();
+  $('#namaDonasiEdit').val(nama);
 
-  var nama = $(this).parent().find('.data-kategori').value;
-  console.log(nama)
+  var dana = $(this).parent().find('.dana').text();
+  $('#danaDonasiEdit').val(dana);
+
+  var kategori = $(this).parent().find('.kategori').text();
+  $('#kategoriEdit').val(kategori);
+
+  var deskripsi = $(this).parent().find('.deskripsi').text();
+  $('#deskripsiEdit').val(deskripsi);
+
+  var gambar = $(this).parent().find('.gambar').text();
+  $('#gambarDonasiEdit').val(gambar);
 
 
 });
 
-function EditCampaign() {
-  firebase.firestore().collection("Donasi").onSnapshot(function (snapshot) {
-    document.getElementById("cardSection").innerHTML = '';
-    snapshot.forEach(function (donasiValue) {
-      document.getElementById("cardSection").innerHTML += `
-            <a href="#myModal" class="btn btn-info btn-lg" data-toggle="modal" data-code="code" data-company="company name">
-  Show Modal
-</a>
 
-  <div class="modal fade bs-example-modal-sm" tabindex="-1" id="myModal">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-        <h4 class="modal-title" id="mySmallModalLabel">Codes & Company</h4>
-      </div>
-      <div class="modal-body">
-        <input type="text" id="${donasiValue.data().namaDonasi}" value="${donasiValue.data().namaDonasi}" class="form-control" />
-        <input type="text" id="${donasiValue.data().danaDonasi}" value="${donasiValue.data().danaDonasi}" class="form-control" />
-      </div>
-    </div>
-  </div>
-</div>
-`
-
-    });
-  });
-}
-
-
+$('#edit-campaign-button').click(function(){
+  const database = firebase.firestore();
+  const userCollection = database.collection('Donasi');
+   const idCamp = $('#campaignId').val();
+        userCollection.doc(idCamp).update({
+          namaDonasi: $("#namaDonasiEdit").val(),
+          deskripsi: $("#deskripsiEdit").val(),
+          danaDonasi : $("#danaDonasiEdit").val(),
+          kategori : $("#kategoriEdit").val(),
+          gambarDonasi : $("#gambarDonasiEdit").val(),
+        })
+        .then(() => {console.log('Data Successfully');})
+        .catch(error  => {console.error(error)});
+  
+});
 
 
 function uploadImage() {
@@ -179,6 +156,32 @@ function uploadImage() {
       const image = document.querySelector('#image')
       image.src = url
       document.getElementById("gambarDonasi").value = url
+
+    })
+}
+
+
+function uploadImageEdit() {
+  const ref = firebase.storage().ref()
+
+  const file = document.querySelector("#photoEdit").files[0]
+
+  const name = new Date() + '-' + file.name
+
+  const metadata = {
+    contentType: file.type
+  }
+
+  const task = ref.child(name).put(file, metadata)
+
+  task
+    .then(snapshot => snapshot.ref.getDownloadURL())
+    .then(urlEdit => {
+
+      alert("Image Upload Successful")
+      const imageEdit = document.querySelector('#imageEdit')
+      imageEdit.src = urlEdit
+      document.getElementById("gambarDonasiEdit").value = urlEdit
 
     })
 }

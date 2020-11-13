@@ -66,7 +66,7 @@ function readAsp() {
         <div class="card-body">
           <h5 class="card-title">${aspirasi.name}</h5>
           <p class="card-text">${aspirasi.deskripsi}</p>
-          <button type="button" id="edit-donasi-btn" data-heroId="${aspirasiValue.id}" class="btn btn-success edit-donasi-btn" data-toggle="modal" data-target="#editModal">Edit</button>
+          <button type="button" id="edit-aspirasi-btn" data-heroId="${aspirasiValue.id}" class="btn btn-success edit-aspirasi-btn" data-toggle="modal" data-target="#editModal">Edit</button>
           <button type="submit" class="btn btn-success" onclick="deleteAsp('${aspirasiValue.id}')">Hapus</button>
         </div>
       </div>
@@ -78,7 +78,7 @@ function readAsp() {
   });
 }
 
-$(document).on('click', '.edit-donasi-btn', function(){
+$(document).on('click', '.edit-aspirasi-btn', function(){
   var heroId = $(this).attr('data-heroId');
   $('#heroId').val(heroId);
   console.log("you click " + heroId);
