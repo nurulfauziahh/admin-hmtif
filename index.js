@@ -67,20 +67,21 @@ function readCampaign() {
     firebase.firestore().collection("Donasi").onSnapshot(function(snapshot){
         document.getElementById("cardSection").innerHTML='';
         snapshot.forEach(function(donasiValue) {
+          var donasi = donasiValue.data();
             document.getElementById("cardSection").innerHTML +=`
             <div class="card" style="width: 22rem;">
-  <img class="card-img-top" src="${donasiValue.data().gambarDonasi}" alt="Card image cap">
+  <img class="card-img-top" src="${donasi.gambarDonasi}" alt="Card image cap">
   <div class="card-body">
-    <h5 class="card-title">${donasiValue.data().namaDonasi}</h5>
-    <p class="card-text">${donasiValue.data().deskripsi}</p>
+    <h5 class="card-title" ><span id="data-nama">${donasi.namaDonasi}</span></h5>
+    <p class="card-text"><span class="data-deskripsi">${donasi.deskripsi}</span></p>
   </div>
   <ul class="list-group list-group-flush">
-    <li class="list-group-item">${donasiValue.data().danaDonasi}</li>
-    <li class="list-group-item">${donasiValue.data().kategori}</li>
-    <li class="list-group-item">Vestibulum at eros</li>  </ul>
+    <li class="list-group-item"><span id="data-dana">${donasi.danaDonasi}</span></li>
+    <li class="list-group-item data-kategori" id="data-kategori">${donasi.kategori}</li>
+    <li class="list-group-item"><span id="data-gambar">${donasi.gambarDonasi}</span></li>
   <div class="card-body">
-    <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#editModal">Edit Me!!</button>
-    <button type="button" id="edit-donasi-btn" class="btn btn-success edit-donasi-btn" onClick"deleteDonasi('${donasiValue.data().userId}')">Hapus</button>
+    <button type="button" id="edit-donasi-btn"  class="btn btn-success edit-donasi-btn" data-toggle="modal" data-target="#editModal">Edit Me!!</button>
+    <button type="button" class="btn btn-success" onclick"deleteDonasi('${donasi.userId}')">Hapus</button>
   </div>
 </div><br>
 `
@@ -90,6 +91,13 @@ function readCampaign() {
 }
 
 
+$(document).on('click', '.edit-donasi-btn', function(){
+
+  var nama = $(this).parent().find('.data-kategori').value;
+  console.log(nama)
+  
+
+});
 
 function EditCampaign() {
     firebase.firestore().collection("Donasi").onSnapshot(function(snapshot){
