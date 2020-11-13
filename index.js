@@ -91,13 +91,7 @@ function readCampaign() {
 }
 
 
-$(document).on('click', '.edit-donasi-btn', function(){
 
-  var nama = $(this).parent().find('.data-kategori').value;
-  console.log(nama)
-  
-
-});
 
 function EditCampaign() {
     firebase.firestore().collection("Donasi").onSnapshot(function(snapshot){
