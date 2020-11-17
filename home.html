@@ -17,7 +17,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
 <div class="container-fluid">
-	<a class="navbar-brand text-primary font-weight-bold" href="#"><img src="img/z.png" height="40">ap</a>
+	<!-- <a class="navbar-brand text-primary font-weight-bold" href="#"><img src="img/z.png" height="40">ap</a> -->
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
 		<span class="navbar-toggler-icon"></span>
 	</button>
@@ -33,10 +33,10 @@
 				<a class="nav-link" href="donasi/index.html">Donasi</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="services.html">Services</a>
+				<a class="nav-link" href="join.html">About Us</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="join.html">About Us</a>
+				<a class="nav-link" href="login.html" id="logout-button">Log Out</a>
 			</li>
 		</ul>
 	</div>
@@ -94,7 +94,6 @@
 <div class="container-fluid padding">
 <div class="row text-center padding">
 
-	<button><a class="nav-link" href="aspirasi/aspirasi.html" >Aspirasi</a></button>
 
 <div class="col-12">
 	<h2 class="display-4">Connect</h2>
@@ -149,33 +148,12 @@
 <!--- End Footer -->
 
 <script>	
+	$("#logout-button").click(function(){
+		firebase.auth().signOut();
+		console.log("logged out");
 
-	$("#show-button").click(function(){
-		readAspirasi();
 
-
-});
-
-function readAspirasi(){
-var aspirasiReference = firebase.firestore().collection("Aspirasi").get();
-var aspirasiHtml = "<h6>Donasi Data</h6>";
-  aspirasiHtml += "<tr>";
-  aspirasiHtml += "<td>Nama Aspirasi/td>" ;
-  aspirasiHtml += "<td>Deskrisi</td>" ;
-  aspirasiHtml += "<td>Aksi</td>";
-  aspirasiHtml += "</tr>" 
-  aspirasiReference.get().then(snapshot => {
-    snapshot.forEach((doc) => {
-      var aspirasi = doc.data();
-      aspirasiHtml += "<tr>";
-      aspirasiHtml += "<td>" + aspirasi.name + "</td>" ;
-      aspirasiHtml += "<td>" + aspirasi.deskripsi + "</td>" ;
-      aspirasiHtml += "<td><button type='button' class='btn btn-primary' data-toggle='modal' data-target='#editHero'>Edit Mee!!</button></td>" ;
-      aspirasiHtml += "</tr>" 
-    });
-	$("#show-aspirasi").html(aspirasiHtml);
-});	
-}
+	});
 
 
 

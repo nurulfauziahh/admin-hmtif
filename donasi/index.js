@@ -43,7 +43,7 @@ userCollection.doc(id).get()
     document.getElementById("detailSection").innerHTML += `
     <img class="card-img-top" src="${donasi.gambarDonasi}" alt="Card image cap">
     <div class="card-body">
-      <h5 class="card-title">${donasi.namaDonasi}</h5>
+      <h4 class="card-title">${donasi.namaDonasi}</h4>
       <p class="card-text kategori">${donasi.kategori}</p>
       <p class="card-text dana">Dana yang dibutuhkan : Rp.${donasi.danaDonasi}</p>
       <p class="card-text deskripsi">${donasi.deskripsi}</p>
