@@ -3,10 +3,13 @@ const database = firebase.firestore();
 const userCollection = database.collection('Donasi');
 
 
-$("#create-campaign-button").click(function(){
+$("#create-campaign-button").click(function () {
+  var dana = $("#danaDonasi").val();
+  var dana2 = parseInt(dana);
   var donasi = {
     namaDonasi: $("#namaDonasi").val(),
-    danaDonasi: $("#danaDonasi").val(),
+    danaDonasi: dana2,
+    danaTerkumpul: 0,
     deskripsi: $("#deskripsi").val(),
     kategori: $("#kategori").val(),
     gambarDonasi: $("#gambarDonasi").val(),
@@ -17,46 +20,46 @@ $("#create-campaign-button").click(function(){
 
 });
 
-function addDonasi(h){
+function addDonasi(h) {
   firebase.firestore().collection("Donasi").add(h);
-  
+
 }
 
 // Clear modal
 let template = null;
-    $('.modal').on('show.bs.modal', function(event) {
-      template = $(this).html();
-    });
+$('.modal').on('show.bs.modal', function (event) {
+  template = $(this).html();
+});
 
-    $('.modal').on('hidden.bs.modal', function(e) {
-      $(this).html(template);
-    });
+$('.modal').on('hidden.bs.modal', function (e) {
+  $(this).html(template);
+});
 
 
-function detailShow(id){
-const database = firebase.firestore();
-const userCollection = database.collection('Donasi');
-userCollection.doc(id).get()
-  .then(donasis => {
-    donasi = donasis.data();
-    if(donasis.exists)
-    document.getElementById("detailSection").innerHTML += `
+function detailShow(id) {
+  const database = firebase.firestore();
+  const userCollection = database.collection('Donasi');
+  userCollection.doc(id).get()
+    .then(donasis => {
+      donasi = donasis.data();
+      if (donasis.exists)
+        document.getElementById("detailSection").innerHTML += `
     <img class="card-img-top" src="${donasi.gambarDonasi}" alt="Card image cap">
     <div class="card-body">
       <h4 class="card-title">${donasi.namaDonasi}</h4>
       <p class="card-text kategori">${donasi.kategori}</p>
-      <p class="card-text dana">Dana yang dibutuhkan : Rp.${donasi.danaDonasi}</p>
+      <p class="card-text dana">Dana yang terkumpul Rp.${donasi.danaTerkumpul} dari Rp.${donasi.danaDonasi}</p>
       <p class="card-text deskripsi">${donasi.deskripsi}</p>
     </div>
   </div>
     
 `
-    else
-      console.log('Campaign does not exist !');
+      else
+        console.log('Campaign does not exist !');
     })
-  .catch(error => {
-    console.error(error);
-  });
+    .catch(error => {
+      console.error(error);
+    });
 }
 
 function readCampaign() {
@@ -72,7 +75,7 @@ function readCampaign() {
             <h5 class="card-title">${donasi.namaDonasi}</h5>
             <p class="card-text kategori" style="display:none">${donasi.kategori}</p>
             <p class="card-text">Dana yang dibutuhkan :</p>
-            <p class="card-text dana">${donasi.danaDonasi}</p>
+            <p class="card-text dana">Rp. ${donasi.danaTerkumpul} terkumpul dari ${donasi.danaDonasi}</p>
             <p class="card-text deskripsi" style="display:none">${donasi.deskripsi}</p>
             <p class="card-text gambar" style="display:none">${donasi.gambarDonasi}</p>
 
@@ -88,13 +91,13 @@ function readCampaign() {
   });
 }
 
-function deleteCamp(id){
+function deleteCamp(id) {
   firebase.firestore().collection("Donasi").doc(id).delete().then(() => {
     console.log("data dihapus");
   });
 }
 
-$(document).on('click', '.edit-donasi-btn', function(){
+$(document).on('click', '.edit-donasi-btn', function () {
   var campaignId = $(this).attr('data-heroId');
   console.log("you click " + campaignId);
   $('#campaignId').val(campaignId);
@@ -111,6 +114,9 @@ $(document).on('click', '.edit-donasi-btn', function(){
   var deskripsi = $(this).parent().find('.deskripsi').text();
   $('#deskripsiEdit').val(deskripsi);
 
+  // var danaTerkumpul = $(this).parent().find('.danaTerkumpul').text();
+  // $('#danaTerkumpulEdit').val(danaTerkumpul);
+
   var gambar = $(this).parent().find('.gambar').text();
   $('#gambarDonasiEdit').val(gambar);
 
@@ -118,20 +124,21 @@ $(document).on('click', '.edit-donasi-btn', function(){
 });
 
 
-$('#edit-campaign-button').click(function(){
+$('#edit-campaign-button').click(function () {
   const database = firebase.firestore();
   const userCollection = database.collection('Donasi');
-   const idCamp = $('#campaignId').val();
-        userCollection.doc(idCamp).update({
-          namaDonasi: $("#namaDonasiEdit").val(),
-          deskripsi: $("#deskripsiEdit").val(),
-          danaDonasi : $("#danaDonasiEdit").val(),
-          kategori : $("#kategoriEdit").val(),
-          gambarDonasi : $("#gambarDonasiEdit").val(),
-        })
-        .then(() => {console.log('Data Successfully');})
-        .catch(error  => {console.error(error)});
-  
+  const idCamp = $('#campaignId').val();
+  userCollection.doc(idCamp).update({
+    namaDonasi: $("#namaDonasiEdit").val(),
+    deskripsi: $("#deskripsiEdit").val(),
+    danaDonasi: $("#danaDonasiEdit").val(),
+    kategori: $("#kategoriEdit").val(),
+    // danaTerkumpul : $("#danaTerkumpulEdit").val(),
+    gambarDonasi: $("#gambarDonasiEdit").val(),
+  })
+    .then(() => { console.log('Data Successfully'); })
+    .catch(error => { console.error(error) });
+
 });
 
 
